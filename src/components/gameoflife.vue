@@ -24,8 +24,8 @@
 
         data () {
             return {
-                rows: 30,
-                cols: 30,
+                rows: store.rows,
+                cols: store.cols,
                 state: store.state,
                 inProgress: false
             }
