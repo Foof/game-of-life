@@ -11,8 +11,8 @@
         </table>
         <div class="controls">
             <button @click="toggleInProgress" :class="['btn', { 'btn-success': !inProgress, 'btn-danger': inProgress }]">{{ buttonText }}</button>
-            <button @click="clearBoard" class="btn btn-warning">Clear board</button>
-            <button @click="randomizeBoard" class="btn btn-warning">Randomize board</button>
+            <button @click="clearBoard" :disabled="inProgress" class="btn btn-warning">Clear board</button>
+            <button @click="randomizeBoard" :disabled="inProgress" class="btn btn-warning">Randomize board</button>
         </div>
     </div>
 </template>
