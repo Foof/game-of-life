@@ -66,7 +66,6 @@
                 const colMaxIndex = this.state[0].length - 1;
                 for (let i = 0; i < this.state.length; i++) {
                     for (let j = 0; j < this.state[i].length; j++) {
-                        const alive = this.state[i][j]
                         let aliveNeighbours = 0
 
                         const neighbourIndexes = [
@@ -79,7 +78,7 @@
                             if (neighbour && this.state[neighbour[0]][neighbour[1]]) aliveNeighbours++
                         })
 
-                        newState[i][j] = alive ? (aliveNeighbours >= 2 && aliveNeighbours <= 3) : (aliveNeighbours === 3)
+                        newState[i][j] = this.state[i][j] ? (aliveNeighbours >= 2 && aliveNeighbours <= 3) : (aliveNeighbours === 3)
                     }
                 }
 

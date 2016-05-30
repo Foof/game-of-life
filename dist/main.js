@@ -10550,7 +10550,6 @@ exports.default = {
             var colMaxIndex = this.state[0].length - 1;
             for (var _i = 0; _i < this.state.length; _i++) {
                 var _loop = function _loop(_j) {
-                    var alive = _this2.state[_i][_j];
                     var aliveNeighbours = 0;
 
                     var neighbourIndexes = [[_i == 0 ? rowMaxIndex : _i - 1, _j == 0 ? colMaxIndex : _j - 1], [_i == 0 ? rowMaxIndex : _i - 1, _j], [_i == 0 ? rowMaxIndex : _i - 1, _j == colMaxIndex ? 0 : _j + 1], [_i, _j == 0 ? colMaxIndex : _j - 1], false, [_i, _j == colMaxIndex ? 0 : _j + 1], [_i == rowMaxIndex ? 0 : _i + 1, _j == 0 ? colMaxIndex : _j - 1], [_i == rowMaxIndex ? 0 : _i + 1, _j], [_i == rowMaxIndex ? 0 : _i + 1, _j == colMaxIndex ? 0 : _j + 1]];
@@ -10559,7 +10558,7 @@ exports.default = {
                         if (neighbour && _this2.state[neighbour[0]][neighbour[1]]) aliveNeighbours++;
                     });
 
-                    newState[_i][_j] = alive ? aliveNeighbours >= 2 && aliveNeighbours <= 3 : aliveNeighbours === 3;
+                    newState[_i][_j] = _this2.state[_i][_j] ? aliveNeighbours >= 2 && aliveNeighbours <= 3 : aliveNeighbours === 3;
                 };
 
                 for (var _j = 0; _j < this.state[_i].length; _j++) {
