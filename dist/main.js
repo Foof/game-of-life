@@ -10480,7 +10480,7 @@ if (module.hot) {(function () {  module.hot.accept()
   }
 })()}
 },{"vue":3,"vue-hot-reload-api":2}],6:[function(require,module,exports){
-var __vueify_style__ = require("vueify-insert-css").insert("\n.game-of-life {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n\n.game-of-life table {\n    height: 900px;\n    width: 900px;\n    border-collapse: collapse;\n}\n\n.game-of-life a {\n    display: block;\n    height: 100%;\n    background-color: #EEE;\n}\n\n.game-of-life a.active {\n    background-color: #666;\n}\n\n.game-of-life a:hover {\n    background-color: #CCC;\n}\n")
+var __vueify_style__ = require("vueify-insert-css").insert("\n.game-of-life {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n\n.game-of-life table {\n    height: 900px;\n    width: 900px;\n}\n\n.game-of-life td {\n    padding: 0 1px 1px 0;\n}\n\n.game-of-life .controls button {\n    margin-right: 10px;\n    margin-top: 10px;\n}\n\n.game-of-life a {\n    display: block;\n    height: 100%;\n    background-color: #EEE;\n}\n\n.game-of-life a:hover {\n    background-color: #CCC;\n}\n\n.game-of-life a.active {\n    background-color: #666;\n}\n\n.game-of-life a.active:hover {\n    background-color: #444;\n}\n")
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -10567,18 +10567,26 @@ exports.default = {
             }
 
             this.state = newState;
+        },
+        clearBoard: function clearBoard() {
+            if (this.inProgress) return;
+            this.state = _store2.default.createEmptyBoard();
+        },
+        randomizeBoard: function randomizeBoard() {
+            if (this.inProgress) return;
+            this.state = _store2.default.createRandomizedBoard();
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"game-of-life\">\n    <table>\n        <tbody>\n            <tr v-for=\"row in rows\" track-by=\"$index\">\n                <td v-for=\"col in cols\" track-by=\"$index\">\n                    <cell :row=\"row\" :col=\"col\" :active.sync=\"state[row][col]\"></cell>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n    <button @click=\"toggleInProgress\">{{ buttonText }}</button>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"game-of-life\">\n    <table>\n        <tbody>\n            <tr v-for=\"row in rows\" track-by=\"$index\">\n                <td v-for=\"col in cols\" track-by=\"$index\">\n                    <cell :row=\"row\" :col=\"col\" :active.sync=\"state[row][col]\"></cell>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n    <div class=\"controls\">\n        <button @click=\"toggleInProgress\" :class=\"['btn', { 'btn-success': !inProgress, 'btn-danger': inProgress }]\">{{ buttonText }}</button>\n        <button @click=\"clearBoard\" class=\"btn btn-warning\">Clear board</button>\n        <button @click=\"randomizeBoard\" class=\"btn btn-warning\">Randomize board</button>\n    </div>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
   if (!hotAPI.compatible) return
   var id = "/Users/jonas/Code/gameoflife/src/components/gameoflife.vue"
   module.hot.dispose(function () {
-    require("vueify-insert-css").cache["\n.game-of-life {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n\n.game-of-life table {\n    height: 900px;\n    width: 900px;\n    border-collapse: collapse;\n}\n\n.game-of-life a {\n    display: block;\n    height: 100%;\n    background-color: #EEE;\n}\n\n.game-of-life a.active {\n    background-color: #666;\n}\n\n.game-of-life a:hover {\n    background-color: #CCC;\n}\n"] = false
+    require("vueify-insert-css").cache["\n.game-of-life {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n\n.game-of-life table {\n    height: 900px;\n    width: 900px;\n}\n\n.game-of-life td {\n    padding: 0 1px 1px 0;\n}\n\n.game-of-life .controls button {\n    margin-right: 10px;\n    margin-top: 10px;\n}\n\n.game-of-life a {\n    display: block;\n    height: 100%;\n    background-color: #EEE;\n}\n\n.game-of-life a:hover {\n    background-color: #CCC;\n}\n\n.game-of-life a.active {\n    background-color: #666;\n}\n\n.game-of-life a.active:hover {\n    background-color: #444;\n}\n"] = false
     document.head.removeChild(__vueify_style__)
   })
   if (!module.hot.data) {
@@ -10620,19 +10628,35 @@ Object.defineProperty(exports, "__esModule", {
 });
 var rows = 30;
 var cols = 30;
-var state = [];
 
-for (var i = 0; i < rows; i++) {
-    state.push([]);
-    for (var j = 0; j < cols; j++) {
-        state[i].push(Math.random() > .5 ? false : true);
+var createEmptyBoard = function createEmptyBoard() {
+    var state = [];
+    for (var i = 0; i < rows; i++) {
+        state[i] = [];
+        for (var j = 0; j < cols; j++) {
+            state[i][j] = false;
+        }
     }
-}
+
+    return state;
+};
+
+var createRandomizedBoard = function createRandomizedBoard() {
+    var state = [];
+    for (var i = 0; i < rows; i++) {
+        state[i] = [];
+        for (var j = 0; j < cols; j++) {
+            state[i][j] = Math.random() > .5 ? false : true;
+        }
+    }
+
+    return state;
+};
+
+var state = createEmptyBoard();
 
 exports.default = {
-    rows: rows,
-    cols: cols,
-    state: state
+    rows: rows, cols: cols, state: state, createEmptyBoard: createEmptyBoard, createRandomizedBoard: createRandomizedBoard
 };
 
 },{}]},{},[7]);

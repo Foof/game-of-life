@@ -9,7 +9,11 @@
                 </tr>
             </tbody>
         </table>
-        <button @click="toggleInProgress">{{ buttonText }}</button>
+        <div class="controls">
+            <button @click="toggleInProgress" :class="['btn', { 'btn-success': !inProgress, 'btn-danger': inProgress }]">{{ buttonText }}</button>
+            <button @click="clearBoard" class="btn btn-warning">Clear board</button>
+            <button @click="randomizeBoard" class="btn btn-warning">Randomize board</button>
+        </div>
     </div>
 </template>
 
@@ -83,6 +87,16 @@
                 }
 
                 this.state = newState;
+            },
+
+            clearBoard() {
+                if (this.inProgress) return
+                this.state = store.createEmptyBoard()
+            },
+
+            randomizeBoard() {
+                if (this.inProgress) return
+                this.state = store.createRandomizedBoard()
             }
         }
     }
@@ -99,7 +113,15 @@
     .game-of-life table {
         height: 900px;
         width: 900px;
-        border-collapse: collapse;
+    }
+
+    .game-of-life td {
+        padding: 0 1px 1px 0;
+    }
+
+    .game-of-life .controls button {
+        margin-right: 10px;
+        margin-top: 10px;
     }
 
     .game-of-life a {
@@ -108,11 +130,15 @@
         background-color: #EEE;
     }
 
+    .game-of-life a:hover {
+        background-color: #CCC;
+    }
+
     .game-of-life a.active {
         background-color: #666;
     }
 
-    .game-of-life a:hover {
-        background-color: #CCC;
+    .game-of-life a.active:hover {
+        background-color: #444;
     }
 </style>
