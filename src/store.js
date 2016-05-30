@@ -1,6 +1,6 @@
-const state = []
 const rows = 30
 const cols = 30
+const state = []
 
 for (let i = 0; i < rows; i++) {
     state.push([])

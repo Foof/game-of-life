@@ -10537,47 +10537,42 @@ exports.default = {
 
             // Duplicate state
             var newState = [];
-            for (var _i = 0; _i < this.state.length; _i++) {
+            for (var i = 0; i < this.state.length; i++) {
                 var row = [];
-                for (var _j = 0; _j < this.state[_i].length; _j++) {
-                    row[_j] = this.state[_i][_j];
+                for (var j = 0; j < this.state[i].length; j++) {
+                    row[j] = this.state[i][j];
                 }
-                newState[_i] = row;
+                newState[i] = row;
             }
 
             // Work out new state
             var rowMaxIndex = this.state.length - 1;
             var colMaxIndex = this.state[0].length - 1;
-            for (var _i2 = 0; _i2 < this.state.length; _i2++) {
-                var _loop = function _loop(_j2) {
-                    var alive = _this2.state[_i2][_j2];
+            for (var _i = 0; _i < this.state.length; _i++) {
+                var _loop = function _loop(_j) {
+                    var alive = _this2.state[_i][_j];
                     var aliveNeighbours = 0;
 
-                    var neighbourIndexes = [[_i2 == 0 ? rowMaxIndex : _i2 - 1, _j2 == 0 ? colMaxIndex : _j2 - 1], [_i2 == 0 ? rowMaxIndex : _i2 - 1, _j2], [_i2 == 0 ? rowMaxIndex : _i2 - 1, _j2 == colMaxIndex ? 0 : _j2 + 1], [_i2, _j2 == 0 ? colMaxIndex : _j2 - 1], false, [_i2, _j2 == colMaxIndex ? 0 : _j2 + 1], [_i2 == rowMaxIndex ? 0 : _i2 + 1, _j2 == 0 ? colMaxIndex : _j2 - 1], [_i2 == rowMaxIndex ? 0 : _i2 + 1, _j2], [_i2 == rowMaxIndex ? 0 : _i2 + 1, _j2 == colMaxIndex ? 0 : _j2 + 1]];
+                    var neighbourIndexes = [[_i == 0 ? rowMaxIndex : _i - 1, _j == 0 ? colMaxIndex : _j - 1], [_i == 0 ? rowMaxIndex : _i - 1, _j], [_i == 0 ? rowMaxIndex : _i - 1, _j == colMaxIndex ? 0 : _j + 1], [_i, _j == 0 ? colMaxIndex : _j - 1], false, [_i, _j == colMaxIndex ? 0 : _j + 1], [_i == rowMaxIndex ? 0 : _i + 1, _j == 0 ? colMaxIndex : _j - 1], [_i == rowMaxIndex ? 0 : _i + 1, _j], [_i == rowMaxIndex ? 0 : _i + 1, _j == colMaxIndex ? 0 : _j + 1]];
 
                     neighbourIndexes.forEach(function (neighbour) {
                         if (neighbour && _this2.state[neighbour[0]][neighbour[1]]) aliveNeighbours++;
                     });
 
-                    newState[_i2][_j2] = alive ? aliveNeighbours >= 2 && aliveNeighbours <= 3 : aliveNeighbours === 3;
+                    newState[_i][_j] = alive ? aliveNeighbours >= 2 && aliveNeighbours <= 3 : aliveNeighbours === 3;
                 };
 
-                for (var _j2 = 0; _j2 < this.state[_i2].length; _j2++) {
-                    _loop(_j2);
+                for (var _j = 0; _j < this.state[_i].length; _j++) {
+                    _loop(_j);
                 }
             }
 
-            // Update state with new state
-            for (var i = 0; i < newState.length; i++) {
-                for (var j = 0; j < newState[i].length; j++) {
-                    this.$set('state[' + i + '][' + j + ']', newState[i][j]);
-                }
-            }
+            this.state = newState;
         }
     }
 };
 if (module.exports.__esModule) module.exports = module.exports.default
-;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"game-of-life\">\n    <table>\n        <tbody>\n            <tr v-for=\"row in rows\">\n                <td v-for=\"col in cols\">\n                    <cell :row=\"row\" :col=\"col\" :active.sync=\"state[row][col]\"></cell>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n    <button @click=\"toggleInProgress\">{{ buttonText }}</button>\n</div>\n"
+;(typeof module.exports === "function"? module.exports.options: module.exports).template = "\n<div class=\"game-of-life\">\n    <table>\n        <tbody>\n            <tr v-for=\"row in rows\" track-by=\"$index\">\n                <td v-for=\"col in cols\" track-by=\"$index\">\n                    <cell :row=\"row\" :col=\"col\" :active.sync=\"state[row][col]\"></cell>\n                </td>\n            </tr>\n        </tbody>\n    </table>\n    <button @click=\"toggleInProgress\">{{ buttonText }}</button>\n</div>\n"
 if (module.hot) {(function () {  module.hot.accept()
   var hotAPI = require("vue-hot-reload-api")
   hotAPI.install(require("vue"), true)
@@ -10624,9 +10619,9 @@ new _vue2.default({
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var state = [];
 var rows = 30;
 var cols = 30;
+var state = [];
 
 for (var i = 0; i < rows; i++) {
     state.push([]);

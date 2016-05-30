@@ -2,8 +2,8 @@
     <div class="game-of-life">
         <table>
             <tbody>
-                <tr v-for="row in rows">
-                    <td v-for="col in cols">
+                <tr v-for="row in rows" track-by="$index">
+                    <td v-for="col in cols" track-by="$index">
                         <cell :row="row" :col="col" :active.sync="state[row][col]"></cell>
                     </td>
                 </tr>
@@ -83,12 +83,7 @@
                     }
                 }
 
-                // Update state with new state
-                for (var i = 0; i < newState.length; i++) {
-                    for (var j = 0; j < newState[i].length; j++) {
-                        this.$set('state[' + i + '][' + j + ']', newState[i][j])
-                    }
-                }
+                this.state = newState;
             }
         }
     }
