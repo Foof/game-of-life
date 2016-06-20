@@ -56,18 +56,11 @@
 
             gameTick() {
                 // Duplicate state
-                const newState = [];
-                for (let i = 0; i < this.state.length; i++) {
-                    const row = []
-                    for (let j = 0; j < this.state[i].length; j++) {
-                        row[j] = this.state[i][j]
-                    }
-                    newState[i] = row
-                }
+                const newState = JSON.parse(JSON.stringify(this.state))
 
                 // Work out new state
-                const rowMaxIndex = this.state.length - 1;
-                const colMaxIndex = this.state[0].length - 1;
+                const rowMaxIndex = this.state.length - 1
+                const colMaxIndex = this.state[0].length - 1
                 for (let i = 0; i < this.state.length; i++) {
                     for (let j = 0; j < this.state[i].length; j++) {
                         let aliveNeighbours = 0
@@ -86,7 +79,7 @@
                     }
                 }
 
-                this.state = newState;
+                this.state = newState
             },
 
             clearBoard() {
