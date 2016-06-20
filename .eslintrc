@@ -1,0 +1,25 @@
+{
+  "globals": {
+    "$": true,
+    "jQuery": true
+  },
+  plugins: ["html"],
+  parserOptions: {
+    ecmaVersion: 6,
+    sourceType: "module"
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "strict": 0,
+    "no-underscore-dangle": 0,
+    "quotes": [2, "single", {"avoidEscape": true, "allowTemplateLiterals": true}],
+    "camelcase": [2, {"properties": "always"}],
+    "semi": [2, "never"],
+    "no-new": 0,
+    "curly": 0
+  }
+}
